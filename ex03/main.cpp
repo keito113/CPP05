@@ -4,47 +4,46 @@
 
 #include <cstddef>
 #include <cstdlib>
-#include <ctime>
 #include <iostream>
-#include <string>
 
-static void	printTitle(const std::string &title) {
+static void	printTitle(const char *title) {
 	std::cout << std::endl << "== " << title << " ==" << std::endl;
 }
 
-static void	createSignExecute(const Intern &intern,
-				const Bureaucrat &bureaucrat,
-				const std::string &formName,
-				const std::string &target) {
-	AForm	*form = intern.makeForm(formName, target);
+int	main(void) {
+	std::srand(1);
 
-	if (form == NULL)
-		return;
-	try {
-		bureaucrat.signForm(*form);
-		bureaucrat.executeForm(*form);
-	} catch (...) {
+	Intern		intern;
+	Bureaucrat	boss("Boss", 1);
+	AForm		*form = NULL;
+
+	printTitle("shrubbery creation");
+	form = intern.makeForm("shrubbery creation", "/tmp/cpp05_ex03_garden");
+	if (form != NULL) {
+		boss.signForm(*form);
+		boss.executeForm(*form);
 		delete form;
-		throw;
 	}
-	delete form;
-}
 
-int	main() {
-	std::srand(std::time(NULL));
-	Intern		someRandomIntern;
-	Bureaucrat	executor("Executor", 1);
+	printTitle("robotomy request");
+	form = intern.makeForm("robotomy request", "Bender");
+	if (form != NULL) {
+		boss.signForm(*form);
+		boss.executeForm(*form);
+		delete form;
+	}
 
-	printTitle("known forms");
-	createSignExecute(someRandomIntern, executor,
-		"shrubbery creation", "home");
-	createSignExecute(someRandomIntern, executor,
-		"robotomy request", "Bender");
-	createSignExecute(someRandomIntern, executor,
-		"presidential pardon", "Arthur Dent");
+	printTitle("presidential pardon");
+	form = intern.makeForm("presidential pardon", "Arthur Dent");
+	if (form != NULL) {
+		boss.signForm(*form);
+		boss.executeForm(*form);
+		delete form;
+	}
 
 	printTitle("unknown form");
-	createSignExecute(someRandomIntern, executor,
-		"coffee request", "Marvin");
+	form = intern.makeForm("coffee request", "Marvin");
+	delete form;
+
 	return 0;
 }

@@ -3,92 +3,72 @@
 
 #include <iostream>
 
-static void	section(const char *title) {
+static void	printTitle(const char *title) {
 	std::cout << std::endl << "== " << title << " ==" << std::endl;
 }
 
-static void	createBureaucrat(const char *name, int grade) {
-	try {
-		Bureaucrat	bureaucrat(name, grade);
-
-		std::cout << "OK   " << bureaucrat << std::endl;
-	} catch (const std::exception &e) {
-		std::cout << "ERR  " << name << "(" << grade << "): "
-			<< e.what() << std::endl;
-	}
-}
-
-static void	createForm(const char *name, int signGrade, int executeGrade) {
-	try {
-		Form	form(name, signGrade, executeGrade);
-
-		std::cout << "OK   " << form << std::endl;
-	} catch (const std::exception &e) {
-		std::cout << "ERR  " << name << "(" << signGrade << ", "
-			<< executeGrade << "): " << e.what() << std::endl;
-	}
-}
-
-static void	signDirectly(Form &form, const Bureaucrat &bureaucrat) {
-	std::cout << "before: " << form << std::endl;
-	try {
-		form.beSigned(bureaucrat);
-		std::cout << "signed by " << bureaucrat.getName() << std::endl;
-	} catch (const std::exception &e) {
-		std::cout << "caught: " << e.what() << std::endl;
-	}
-	std::cout << "after:  " << form << std::endl;
-}
-
 int	main(void) {
-	section("bureaucrat construction");
-	createBureaucrat("Top", 1);
-	createBureaucrat("Bottom", 150);
-	createBureaucrat("TooHigh", 0);
-	createBureaucrat("TooLow", 151);
+	try {
+		Bureaucrat	boss("Boss", 10);
+		Bureaucrat	intern("Intern", 100);
+		Form		permit("Permit", 10, 20);
+		Form		secret("Secret", 50, 20);
+		Form		direct("Direct", 10, 20);
 
-	section("form construction");
-	createForm("TopSecret", 1, 1);
-	createForm("PublicNotice", 150, 150);
-	createForm("BadSignHigh", 0, 50);
-	createForm("BadSignLow", 151, 50);
-	createForm("BadExecHigh", 50, 0);
-	createForm("BadExecLow", 50, 151);
+		printTitle("construction");
+		std::cout << boss << std::endl;
+		std::cout << permit << std::endl;
 
-	section("beSigned success and failure");
-	Bureaucrat	boss("Boss", 10);
-	Bureaucrat	intern("Intern", 100);
-	Form		permit("Permit", 10, 20);
-	Form		secret("Secret", 50, 20);
+		printTitle("signForm success");
+		std::cout << permit << std::endl;
+		boss.signForm(permit);
+		std::cout << permit << std::endl;
 
-	signDirectly(permit, boss);
-	signDirectly(secret, intern);
+		printTitle("signForm failure");
+		std::cout << secret << std::endl;
+		intern.signForm(secret);
+		std::cout << secret << std::endl;
 
-	section("Bureaucrat::signForm");
-	Form	contract("Contract", 75, 50);
-	Form	order("ExecutiveOrder", 5, 5);
+		printTitle("beSigned direct");
+		std::cout << direct << std::endl;
+		direct.beSigned(boss);
+		std::cout << direct << std::endl;
+	} catch (std::exception &e) {
+		std::cout << "setup error: " << e.what() << std::endl;
+	}
 
-	boss.signForm(contract);
-	intern.signForm(order);
+	printTitle("invalid form grades");
+	try {
+		Form	broken("SignHigh", 0, 50);
 
-	section("already signed still checks authority");
-	intern.signForm(contract);
+		std::cout << broken << std::endl;
+	} catch (std::exception &e) {
+		std::cout << "sign grade 0: " << e.what() << std::endl;
+	}
 
-	section("copy and assignment");
-	Form	original("OriginalForm", 42, 21);
-	Bureaucrat	signer("Signer", 42);
-	original.beSigned(signer);
-	Form	copied(original);
-	Form	left("LeftForm", 100, 100);
-	Form	right("RightForm", 10, 10);
+	try {
+		Form	broken("SignLow", 151, 50);
 
-	right.beSigned(boss);
-	std::cout << "original: " << original << std::endl;
-	std::cout << "copy:     " << copied << std::endl;
-	std::cout << "before:   " << left << std::endl;
-	left = right;
-	std::cout << "after:    " << left
-		<< " (name and grades stay LeftForm)" << std::endl;
-	std::cout << "source:   " << right << std::endl;
+		std::cout << broken << std::endl;
+	} catch (std::exception &e) {
+		std::cout << "sign grade 151: " << e.what() << std::endl;
+	}
+
+	try {
+		Form	broken("ExecuteHigh", 50, 0);
+
+		std::cout << broken << std::endl;
+	} catch (std::exception &e) {
+		std::cout << "execute grade 0: " << e.what() << std::endl;
+	}
+
+	try {
+		Form	broken("ExecuteLow", 50, 151);
+
+		std::cout << broken << std::endl;
+	} catch (std::exception &e) {
+		std::cout << "execute grade 151: " << e.what() << std::endl;
+	}
+
 	return 0;
 }
