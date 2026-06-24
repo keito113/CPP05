@@ -1,11 +1,14 @@
-NAME = form
+NAME = forms
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
 
 SRCS = main.cpp \
 	   Bureaucrat.cpp \
-	   Form.cpp \
+	   AForm.cpp \
+	   ShrubberyCreationForm.cpp \
+	   RobotomyRequestForm.cpp \
+	   PresidentialPardonForm.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
