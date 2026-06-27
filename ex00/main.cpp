@@ -15,7 +15,7 @@ int	main(void) {
 		alice.incrementGrade();
 		std::cout << "after: " << alice << std::endl;
 		alice.incrementGrade();
-	} catch (std::exception &e) {
+	} catch (const std::exception &e) {
 		std::cout << "error: " << e.what() << std::endl;
 	}
 
@@ -27,7 +27,7 @@ int	main(void) {
 		bob.decrementGrade();
 		std::cout << "after: " << bob << std::endl;
 		bob.decrementGrade();
-	} catch (std::exception &e) {
+	} catch (const std::exception &e) {
 		std::cout << "error: " << e.what() << std::endl;
 	}
 
@@ -36,7 +36,7 @@ int	main(void) {
 		Bureaucrat	tooHigh("TooHigh", 0);
 
 		std::cout << tooHigh << std::endl;
-	} catch (std::exception &e) {
+	} catch (const std::exception &e) {
 		std::cout << "grade 0: " << e.what() << std::endl;
 	}
 
@@ -44,7 +44,7 @@ int	main(void) {
 		Bureaucrat	tooLow("TooLow", 151);
 
 		std::cout << tooLow << std::endl;
-	} catch (std::exception &e) {
+	} catch (const std::exception &e) {
 		std::cout << "grade 151: " << e.what() << std::endl;
 	}
 

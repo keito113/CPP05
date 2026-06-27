@@ -33,7 +33,7 @@ int	main(void) {
 		std::cout << direct << std::endl;
 		direct.beSigned(boss);
 		std::cout << direct << std::endl;
-	} catch (std::exception &e) {
+	} catch (const std::exception &e) {
 		std::cout << "setup error: " << e.what() << std::endl;
 	}
 
@@ -42,7 +42,7 @@ int	main(void) {
 		Form	broken("SignHigh", 0, 50);
 
 		std::cout << broken << std::endl;
-	} catch (std::exception &e) {
+	} catch (const std::exception &e) {
 		std::cout << "sign grade 0: " << e.what() << std::endl;
 	}
 
@@ -50,7 +50,7 @@ int	main(void) {
 		Form	broken("SignLow", 151, 50);
 
 		std::cout << broken << std::endl;
-	} catch (std::exception &e) {
+	} catch (const std::exception &e) {
 		std::cout << "sign grade 151: " << e.what() << std::endl;
 	}
 
@@ -58,7 +58,7 @@ int	main(void) {
 		Form	broken("ExecuteHigh", 50, 0);
 
 		std::cout << broken << std::endl;
-	} catch (std::exception &e) {
+	} catch (const std::exception &e) {
 		std::cout << "execute grade 0: " << e.what() << std::endl;
 	}
 
@@ -66,7 +66,7 @@ int	main(void) {
 		Form	broken("ExecuteLow", 50, 151);
 
 		std::cout << broken << std::endl;
-	} catch (std::exception &e) {
+	} catch (const std::exception &e) {
 		std::cout << "execute grade 151: " << e.what() << std::endl;
 	}
 
