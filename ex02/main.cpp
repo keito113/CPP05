@@ -15,7 +15,7 @@ int	main(void) {
 
 	Bureaucrat				boss("Boss", 1);
 	Bureaucrat				trainee("Trainee", 150);
-	ShrubberyCreationForm	shrubbery("/tmp/cpp05_ex02_garden");
+	ShrubberyCreationForm	shrubbery("garden");
 	RobotomyRequestForm		robotomy("Bender");
 	PresidentialPardonForm	pardon("Arthur Dent");
 

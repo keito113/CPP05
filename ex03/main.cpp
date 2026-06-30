@@ -18,7 +18,7 @@ int	main(void) {
 	AForm		*form = NULL;
 
 	printTitle("shrubbery creation");
-	form = intern.makeForm("shrubbery creation", "/tmp/cpp05_ex03_garden");
+	form = intern.makeForm("shrubbery creation", "garden");
 	if (form != NULL) {
 		boss.signForm(*form);
 		boss.executeForm(*form);
